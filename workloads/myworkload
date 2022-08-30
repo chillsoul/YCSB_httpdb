@@ -24,16 +24,16 @@
 
 fieldcount=1
 fieldlength=10
-recordcount=10
-operationcount=1000
+recordcount=10000
+operationcount=10000
 workload=site.ycsb.workloads.MyWorkload
 
 readallfields=true
 
 readproportion=0.5
-updateproportion=0.5
+updateproportion=0
 scanproportion=0
-insertproportion=0
+insertproportion=0.5
 
 requestdistribution=zipfian
 

@@ -14,6 +14,7 @@ import java.util.Vector;
 
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -39,7 +40,7 @@ public class MyClient extends DB {
 
   private static CloseableHttpClient httpClient;
   private static HttpPost httpPost;
-  private static HttpResponse response;
+  private static CloseableHttpResponse response;
   private static HttpGet httpGet;
 
   // having multiple tables in leveldb is a hack. must divide key
@@ -133,9 +134,11 @@ public class MyClient extends DB {
       }
       httpGet = new HttpGet(MessageFormat.format(
           "{0}/{1}/{2}", insertUrl, key, value));
-      System.out.println("[INSERT] KEY "+key+" VALUE "+value );
+      httpGet.addHeader("Connection", "close");
+      //System.out.println("[INSERT] KEY "+key+" VALUE "+value );
       response = httpClient.execute(httpGet);
       EntityUtils.consume(response.getEntity());
+      response.close();
       return Status.OK;
     } catch (Exception e) {
       e.printStackTrace();
@@ -163,7 +166,7 @@ public class MyClient extends DB {
     try {
       httpGet = new HttpGet(MessageFormat.format("{0}/{1}", readUrl,
           key));
-
+      httpGet.addHeader("Connection", "Close");
       response = httpClient.execute(httpGet);
 
       EntityUtils.consume(response.getEntity());
@@ -192,6 +195,7 @@ public class MyClient extends DB {
   public Status update(String table, String key,
                     Map<String, ByteIterator> values) {
     try {
+
       return Status.OK;
     } catch (Exception e) {
       e.printStackTrace();
