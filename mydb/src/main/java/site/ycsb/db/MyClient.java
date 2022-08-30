@@ -133,15 +133,12 @@ public class MyClient extends DB {
       }
       httpGet = new HttpGet(MessageFormat.format(
           "{0}/{1}/{2}", insertUrl, key, value));
-      // System.out.println("# insert request - " +
-      // httpPost.getRequestLine());
-      response = httpClient.execute(httpPost);
-      // System.out.println("# insert response - " +
-      // getStringFromInputStream(response.getEntity().getContent()));
+      System.out.println("[INSERT] KEY "+key+" VALUE "+value );
+      response = httpClient.execute(httpGet);
       EntityUtils.consume(response.getEntity());
       return Status.OK;
     } catch (Exception e) {
-      System.err.println(e.toString());
+      e.printStackTrace();
       return Status.ERROR;
     }
   }
@@ -172,7 +169,7 @@ public class MyClient extends DB {
       EntityUtils.consume(response.getEntity());
       return Status.OK;
     } catch (Exception e) {
-      System.err.println(e.toString());
+      e.printStackTrace();
       return Status.ERROR;
     }
   }
