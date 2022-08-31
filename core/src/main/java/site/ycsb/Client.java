@@ -275,6 +275,7 @@ public final class Client {
 
   @SuppressWarnings("unchecked")
   public static void main(String[] args) {
+
     Properties props = parseArguments(args);
 
     boolean status = Boolean.valueOf(props.getProperty(STATUS_PROPERTY, String.valueOf(false)));
@@ -598,7 +599,7 @@ public final class Client {
           System.out.println("Missing argument value for -P.");
           System.exit(0);
         }
-        String propfile = args[argindex];
+        String propfile = System.getProperty("user.dir")+args[argindex];
         argindex++;
 
         Properties myfileprops = new Properties();

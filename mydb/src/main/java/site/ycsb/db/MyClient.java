@@ -13,7 +13,6 @@ import java.util.Set;
 import java.util.Vector;
 
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -31,7 +30,7 @@ import site.ycsb.StringByteIterator;
  */
 public class MyClient extends DB {
 
-  private static String dbUrl = "http://localhost:8080";
+  private static String dbUrl = "http://127.0.0.1:8080";
   private static String deleteUrl = dbUrl + "/del";
   private static String insertUrl = dbUrl + "/put";
   private static String readUrl = dbUrl + "/get";

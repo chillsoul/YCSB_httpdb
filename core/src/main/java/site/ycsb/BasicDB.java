@@ -250,7 +250,7 @@ public class BasicDB extends DB {
       sb.append("]");
       System.out.println(sb);
     }
-
+    //todelay=10;
     if (count) {
       incCounter(inserts, hash(table, key, values));
     }

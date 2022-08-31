@@ -42,5 +42,15 @@ LICENSE file.
       <scope>provided</scope>
     </dependency>
   </dependencies>
-
+  <build>
+    <testResources>
+      <testResource>
+        <directory>../workloads</directory>
+        <targetPath>workloads</targetPath>
+      </testResource>
+      <testResource>
+        <directory>src/test/resources</directory>
+      </testResource>
+    </testResources>
+  </build>
 </project>
