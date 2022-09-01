@@ -1,80 +1,26 @@
-<!--
-Copyright (c) 2010 Yahoo! Inc., 2012 - 2016 YCSB contributors.
-All rights reserved.
+# YCSB HTTP Database Benchmark 
 
-Licensed under the Apache License, Version 2.0 (the "License"); you
-may not use this file except in compliance with the License. You
-may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0
+基于YCSB提供的Workload、DB接口修改，目的是扩展YCSB通过HTTP API访问自定义的索引结构。
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-implied. See the License for the specific language governing
-permissions and limitations under the License. See accompanying
-LICENSE file.
--->
+通过调用`site.ycsb.db.MyClient`利用`HttpClient`实现HTTP访问，测试操作较多时建议在Linux上运行，Windows可能出现socket端口不足的问题。
 
-YCSB
-====================================
-[![Build Status](https://travis-ci.org/brianfrankcooper/YCSB.png?branch=master)](https://travis-ci.org/brianfrankcooper/YCSB)
+例如，要访问LevelDB数据库，可以在任意语言的LevelDB Client的基础上封装HTTP API，然后修改本项目实现支持。
+
+项目中删除了一些用不到的数据库binding使项目结构简单，留下了Redis的官方实现以供二次开发参考。
+
+## 二次开发
+
+修改工作负载：可以参照`site.ycsb.workload.CoreWorkload`修改`site.ycsb.workload.MyWorkload`，`MyWorkload`代码中默认为基于个人需要修改的key和value为int类型。
+
+修改HTTP访问：修改MyDB文件夹的`site.ycsb.db.MyClient`。默认只实现了Insert和Read操作。
 
 
 
-Links
------
-* To get here, use https://ycsb.site
-* [Our project docs](https://github.com/brianfrankcooper/YCSB/wiki)
-* [The original announcement from Yahoo!](https://labs.yahoo.com/news/yahoo-cloud-serving-benchmark/)
 
-Getting Started
----------------
+### Thanks to:
 
-1. Download the [latest release of YCSB](https://github.com/brianfrankcooper/YCSB/releases/latest):
+#### YCSB 0.17.0
 
-    ```sh
-    curl -O --location https://github.com/brianfrankcooper/YCSB/releases/download/0.15.0/ycsb-0.15.0.tar.gz
-    tar xfvz ycsb-0.15.0.tar.gz
-    cd ycsb-0.15.0
-    ```
-    
-2. Set up a database to benchmark. There is a README file under each binding 
-   directory.
+#### Apache HttpComponents 4.5.13
 
-3. Run YCSB command. 
-
-    On Linux:
-    ```sh
-    bin/ycsb.sh load basic -P workloads/workloada
-    bin/ycsb.sh run basic -P workloads/workloada
-    ```
-
-    On Windows:
-    ```bat
-    bin/ycsb.bat load basic -P workloads\workloada
-    bin/ycsb.bat run basic -P workloads\workloada
-    ```
-
-  Running the `ycsb` command without any argument will print the usage. 
-   
-  See https://github.com/brianfrankcooper/YCSB/wiki/Running-a-Workload
-  for a detailed documentation on how to run a workload.
-
-  See https://github.com/brianfrankcooper/YCSB/wiki/Core-Properties for 
-  the list of available workload properties.
-
-
-Building from source
---------------------
-
-YCSB requires the use of Maven 3; if you use Maven 2, you may see [errors
-such as these](https://github.com/brianfrankcooper/YCSB/issues/406).
-
-To build the full distribution, with all database bindings:
-
-    mvn clean package
-
-To build a single database binding:
-
-    mvn -pl mongodb-binding -am clean package
